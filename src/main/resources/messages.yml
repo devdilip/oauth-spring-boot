@@ -1,0 +1,16 @@
+response:
+  code:
+    unauthorized: 401
+    internalServerError: 500
+    success: 100
+    noRecord: 101
+    failure: 102
+    invalidRequest: 103
+
+  message:
+    unauthorized: Authorization failed
+    internalServerError: Unexpected error occurred while processing the request
+    success: Success
+    noRecord: No record found
+    failure: Failure
+    invalidRequest: Invalid request
