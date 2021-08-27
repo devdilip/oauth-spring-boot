@@ -1,7 +1,6 @@
 package com.authentication.oauth.controller;
 
 import com.authentication.oauth.common.constants.AppConstants;
-import com.authentication.oauth.model.AppResponse;
 import com.authentication.oauth.model.ErrorResponse;
 import com.authentication.oauth.model.StatusResponse;
 import com.authentication.oauth.model.UserResponse;
@@ -14,16 +13,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.authentication.oauth.common.constants.RouteConstant.APP_VERSION;
+import static com.authentication.oauth.common.constants.RouteConstant.USER_BASE_ROUTE;
 
 @RestController
 @Slf4j
+@RequestMapping(APP_VERSION + USER_BASE_ROUTE)
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable("userId") String userId){
 
         log.debug("Executing :: getUserById :: START");

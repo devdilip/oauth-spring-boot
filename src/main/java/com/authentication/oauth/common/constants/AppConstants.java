@@ -35,4 +35,9 @@ public class AppConstants {
 
     public static final String AUTHORITIES_ROLE_USER = "ROLE_USER";
 
+    public static final String ERROR_401 = "Unauthorized";
+    public static final String ERROR_500 = "Internal Server Error";
+    public static final String ERROR_400 = "Bad Request";
+    public static final String ERROR_DATABASE = "Database Error";
+
 }
