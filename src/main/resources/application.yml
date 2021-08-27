@@ -16,5 +16,3 @@ spring:
 file:
   location:
     secrets: /Users/dilipkumar/Projects/oauth/src/main/resources/secret.json
-
-
