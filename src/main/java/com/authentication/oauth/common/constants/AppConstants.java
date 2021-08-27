@@ -17,14 +17,14 @@ public class AppConstants {
     public static final String INVALID_USER_ID = "104";
     public static final String INVALID_USER_ID_MSG = "Invalid user id!";
 
-    public static final String ERROR_CODE_UNAUTHORIZED = "111";
+    public static final String ERROR_CODE_UNAUTHORIZED = "401";
     public static final String ERROR_MSG_UNAUTHORIZED = "You are not authorized!";
 
     public static final String ERROR_CODE_PERSISTENCE = "112";
     public static final String ERROR_MSG_PERSISTENCE = "PERSISTENCE!";
 
 
-    public static final String ERROR_CODE_INVALID_METHOD_ARGUMENT = "113";
+    public static final String ERROR_CODE_INVALID_METHOD_ARGUMENT = "400";
     public static final String ERROR_MSG_INVALID_METHOD_ARGUMENT = "INVALID_METHOD_ARGUMENT!";
 
     public static final String APP_PATH_IDENTIFIER = "/app/**";
