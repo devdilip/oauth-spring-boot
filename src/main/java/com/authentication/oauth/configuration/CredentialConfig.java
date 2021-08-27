@@ -17,7 +17,7 @@ import java.io.IOException;
 public class CredentialConfig {
 
     @Value("${file.location.secrets}")
-    private String filePath;
+    protected String filePath;
 
     @Bean
     public Credentials credentials() throws IOException {

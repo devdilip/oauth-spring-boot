@@ -17,12 +17,7 @@ public class AppConstants {
     public static final String INVALID_USER_ID = "104";
     public static final String INVALID_USER_ID_MSG = "Invalid user id!";
 
-    public static final String ERROR_CODE_UNAUTHORIZED = "401";
     public static final String ERROR_MSG_UNAUTHORIZED = "You are not authorized!";
-
-    public static final String ERROR_CODE_PERSISTENCE = "112";
-    public static final String ERROR_MSG_PERSISTENCE = "PERSISTENCE!";
-
 
     public static final String ERROR_CODE_INVALID_METHOD_ARGUMENT = "400";
     public static final String ERROR_MSG_INVALID_METHOD_ARGUMENT = "INVALID_METHOD_ARGUMENT!";
@@ -35,8 +30,8 @@ public class AppConstants {
 
     public static final String AUTHORITIES_ROLE_USER = "ROLE_USER";
 
-    public static final String ERROR_401 = "Unauthorized";
-    public static final String ERROR_500 = "Internal Server Error";
+    public static final String ERROR_401_UNAUTHORIZED = "401 UNAUTHORIZED";
+    public static final String ERROR_500_INTERNAL_SERVER_ERROR = "500 INTERNAL_SERVER_ERROR";
     public static final String ERROR_400 = "Bad Request";
     public static final String ERROR_DATABASE = "Database Error";
 

@@ -24,13 +24,13 @@ public class ResponseFormatter {
 
         switch (errorCode){
 
-            case ERROR_401:
+            case ERROR_401_UNAUTHORIZED:
                 userResponse.setStatus(new StatusResponse(
                         Integer.parseInt(messageSource.getMessage("response.code.unauthorized", null, Locale.getDefault())),
                         messageSource.getMessage("response.message.unauthorized", null, Locale.getDefault())
                 ));
                 break;
-            case ERROR_500:
+            case ERROR_500_INTERNAL_SERVER_ERROR:
                 userResponse.setStatus(new StatusResponse(
                         Integer.parseInt(messageSource.getMessage("response.code.internalServerError", null, Locale.getDefault())),
                         messageSource.getMessage("response.message.internalServerError", null, Locale.getDefault())
@@ -42,6 +42,7 @@ public class ResponseFormatter {
                         messageSource.getMessage("response.message.failure", null, Locale.getDefault())
                 ));
                 break;
+
             default:
                 break;
         }

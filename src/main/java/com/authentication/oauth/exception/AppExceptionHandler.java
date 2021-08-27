@@ -1,9 +1,12 @@
 package com.authentication.oauth.exception;
 
 import com.authentication.oauth.common.constants.AppConstants;
+import com.authentication.oauth.mapper.ResponseFormatter;
 import com.authentication.oauth.model.AppResponse;
 import com.authentication.oauth.model.ErrorResponse;
+import com.authentication.oauth.model.UserResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,22 +23,21 @@ import javax.persistence.PersistenceException;
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @Autowired
+    private ResponseFormatter responseFormatter;
+
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<AppResponse> handleUnauthorizedException(AccessDeniedException exception){
+    public ResponseEntity<UserResponse> handleUnauthorizedException(AccessDeniedException exception){
         log.error("Unauthorized: {}", exception.getMessage());
-        AppResponse appResponse = new AppResponse();
-        appResponse.setStatus(null);
-        appResponse.setError(new ErrorResponse(Integer.valueOf(AppConstants.ERROR_CODE_UNAUTHORIZED), AppConstants.ERROR_MSG_UNAUTHORIZED));
-        return new ResponseEntity<>(appResponse, HttpStatus.UNAUTHORIZED);
+        UserResponse userResponse = responseFormatter.getFailureResponse(HttpStatus.UNAUTHORIZED.toString(), null);
+        return new ResponseEntity<>(userResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(PersistenceException.class)
-    public ResponseEntity<AppResponse> handleDatabaseException(PersistenceException exception) {
+    public ResponseEntity<UserResponse> handleDatabaseException(PersistenceException exception) {
         log.error("PersistenceException: {}", exception.getMessage());
-        AppResponse appResponse = new AppResponse();
-        appResponse.setStatus(null);
-        appResponse.setError(new ErrorResponse(Integer.valueOf(AppConstants.ERROR_CODE_PERSISTENCE), AppConstants.ERROR_MSG_PERSISTENCE));
-        return new ResponseEntity<>(appResponse, HttpStatus.BAD_REQUEST);
+        UserResponse userResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_DATABASE, null);
+        return new ResponseEntity<>(userResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Override
