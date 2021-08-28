@@ -63,6 +63,7 @@ public class ResponseFormatter {
                         messageSource.getMessage("response.message.methodNotAllowed", null, Locale.getDefault())
                 ));
                 setErrorInResponse(appResponse, errors, methodNotAllowedCode);
+                break;
 
             default:
                 break;
