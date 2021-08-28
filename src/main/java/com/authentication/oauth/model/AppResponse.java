@@ -13,5 +13,4 @@ import lombok.NoArgsConstructor;
 public class AppResponse {
     private StatusResponse status;
     private ErrorResponse error;
-    private MessageResponse message;
 }

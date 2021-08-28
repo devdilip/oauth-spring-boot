@@ -3,6 +3,7 @@ package com.authentication.oauth.controller;
 import com.authentication.oauth.common.constants.AppConstants;
 import com.authentication.oauth.model.ErrorResponse;
 import com.authentication.oauth.model.StatusResponse;
+import com.authentication.oauth.model.UserRequest;
 import com.authentication.oauth.model.UserResponse;
 import com.authentication.oauth.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +12,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static com.authentication.oauth.common.constants.RouteConstant.APP_VERSION;
 import static com.authentication.oauth.common.constants.RouteConstant.USER_BASE_ROUTE;
@@ -46,6 +46,20 @@ public class UserController {
                 userResponse.setStatus(new StatusResponse(Integer.valueOf(AppConstants.ERROR_CODE_INVALID_REQUEST), AppConstants.ERROR_MSG_INVALID_REQUEST));
                 userResponse.setError(new ErrorResponse(Integer.valueOf(invalidateRequestMgs.split("~")[0]), invalidateRequestMgs.split("~")[1]));
             }
+        }catch (Exception e){
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            userResponse.setStatus(null);
+            userResponse.setError(new ErrorResponse(Integer.valueOf(AppConstants.ERROR_CODE_FAILURE), AppConstants.ERROR_MSG_FAILURE));
+        }
+        return new ResponseEntity<>(userResponse, httpStatus);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest user){
+        HttpStatus httpStatus = HttpStatus.OK;
+        UserResponse userResponse = new UserResponse();
+        try {
+            System.out.println();
         }catch (Exception e){
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
             userResponse.setStatus(null);

@@ -33,6 +33,8 @@ public class AppConstants {
     public static final String ERROR_401_UNAUTHORIZED = "401 UNAUTHORIZED";
     public static final String ERROR_500_INTERNAL_SERVER_ERROR = "500 INTERNAL_SERVER_ERROR";
     public static final String ERROR_400 = "Bad Request";
+    public static final String ERROR_400_INVALID_ARGUMENT = "400 INVALID_ARGUMENT";
+    public static final String ERROR_405_METHOD_NOT_ALLOWED = "405 METHOD_NOT_ALLOWED";
     public static final String ERROR_DATABASE = "Database Error";
 
 }
