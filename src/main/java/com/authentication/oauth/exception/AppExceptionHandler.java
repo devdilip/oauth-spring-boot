@@ -42,14 +42,14 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.info("handleMethodArgumentNotValid :: Error");
+        log.error("handleMethodArgumentNotValid :: Error");
         AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_400_INVALID_ARGUMENT, ex.getBindingResult().getAllErrors());
         return new ResponseEntity<>(appResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.info("handleHttpRequestMethodNotSupported: {}", ex.getMethod());
+        log.error("handleHttpRequestMethodNotSupported: {}", ex.getMethod());
         AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_405_METHOD_NOT_ALLOWED, List.of(ex.getMessage()));
         return new ResponseEntity<>(appResponse, HttpStatus.METHOD_NOT_ALLOWED);
     }
