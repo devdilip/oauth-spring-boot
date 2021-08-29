@@ -51,17 +51,15 @@ public class ResponseFormatter {
 
             case ERROR_400_INVALID_ARGUMENT:
                 Integer invalidRequestCode = Integer.parseInt(messageSource.getMessage("response.code.invalidRequest", null, Locale.getDefault()));
-                appResponse.setStatus(new StatusResponse(invalidRequestCode,
-                        messageSource.getMessage("response.message.invalidRequest", null, Locale.getDefault())
-                ));
+                String invalidRequestMessage = messageSource.getMessage("response.message.invalidRequest", null, Locale.getDefault());
+                appResponse.setStatus(new StatusResponse(invalidRequestCode, invalidRequestMessage));
                 setErrorInResponse(appResponse, errors, invalidRequestCode);
                 break;
 
             case ERROR_405_METHOD_NOT_ALLOWED:
                 Integer methodNotAllowedCode = Integer.parseInt(messageSource.getMessage("response.code.methodNotAllowed", null, Locale.getDefault()));
-                appResponse.setStatus(new StatusResponse(methodNotAllowedCode,
-                        messageSource.getMessage("response.message.methodNotAllowed", null, Locale.getDefault())
-                ));
+                String methodNotAllowedMessage = messageSource.getMessage("response.message.methodNotAllowed", null, Locale.getDefault());
+                appResponse.setStatus(new StatusResponse(methodNotAllowedCode, methodNotAllowedMessage));
                 setErrorInResponse(appResponse, errors, methodNotAllowedCode);
                 break;
 
