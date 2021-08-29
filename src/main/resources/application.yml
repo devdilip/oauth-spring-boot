@@ -17,7 +17,7 @@ spring:
 
 file:
   location:
-    secrets: /Users/dilipkumar/Projects/oauth/src/main/resources/secret.json
+    secrets: src/main/resources/secret.json
 
 app:
   messages:
