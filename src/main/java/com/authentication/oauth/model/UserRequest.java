@@ -27,4 +27,9 @@ public class UserRequest {
     @NotBlank (message = "Email should not be empty")
     @Size(min = 5, max = 30, message = "Email size must be between 5 and 30")
     private String email;
+
+    @Size(min = 8, max = 13, message = "Mobile size must be between 8 and 13")
+    @NotNull (message = "Mobile should not be null")
+    @NotBlank (message = "Mobile should not be empty")
+    private String mobile;
 }

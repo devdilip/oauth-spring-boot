@@ -39,7 +39,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(PersistenceException.class)
     public ResponseEntity<AppResponse> handleDatabaseException(PersistenceException exception) {
         log.error("PersistenceException: {}", exception.getMessage());
-        AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_DATABASE, null);
+        AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_DATABASE, List.of(exception.getMessage()));
         return new ResponseEntity<>(appResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -84,7 +84,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> handleException(Exception exception) {
         log.error("Exception: {}", exception.getMessage());
-        AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_500_INTERNAL_SERVER_ERROR, null);
+        AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_500_INTERNAL_SERVER_ERROR, List.of(exception.getMessage()));
         return new ResponseEntity<>(appResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -13,4 +13,5 @@ public class UserDetailResponse {
     private Integer id;
     private String name;
     private String email;
+    private String mobile;
 }

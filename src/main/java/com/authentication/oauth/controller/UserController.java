@@ -40,8 +40,8 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest user){
-        UserResponse userResponse = new UserResponse();
+    public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest){
+        UserResponse userResponse = userService.saveUser(userRequest);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 

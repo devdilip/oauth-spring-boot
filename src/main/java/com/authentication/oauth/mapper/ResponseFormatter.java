@@ -41,7 +41,7 @@ public class ResponseFormatter {
                         Integer.parseInt(messageSource.getMessage("response.code.internalServerError", null, Locale.getDefault())),
                         messageSource.getMessage("response.message.internalServerError", null, Locale.getDefault())
                 ));
-                appResponse.setError(new ErrorResponse(Integer.valueOf(AppConstants.ERROR_CODE_FAILURE), AppConstants.ERROR_MSG_FAILURE));
+                setErrorInResponse(appResponse, errors, Integer.valueOf(AppConstants.ERROR_CODE_FAILURE));
                 break;
 
             case ERROR_DATABASE:
@@ -49,6 +49,7 @@ public class ResponseFormatter {
                         Integer.parseInt(messageSource.getMessage("response.code.failure", null, Locale.getDefault())),
                         messageSource.getMessage("response.message.failure", null, Locale.getDefault())
                 ));
+                setErrorInResponse(appResponse, errors, Integer.valueOf(AppConstants.ERROR_DB));
                 break;
 
             case ERROR_400_INVALID_ARGUMENT:
