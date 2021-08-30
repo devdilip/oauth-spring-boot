@@ -39,6 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers(AppConstants.ALL_PATH_IDENTIFIER ).authenticated()
+                .antMatchers(AppConstants.ACTUATOR_PATH_IDENTIFIER).authenticated()
+                .antMatchers(AppConstants.APP_ACTUATOR_PATH_IDENTIFIER).authenticated()
                 .antMatchers(AppConstants.ALL_PATH_IDENTIFIER,
                         AppConstants.APP_PATH_IDENTIFIER,
                         AppConstants.ACTUATOR_PATH_IDENTIFIER,

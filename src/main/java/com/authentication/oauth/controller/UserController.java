@@ -33,39 +33,23 @@ public class UserController {
         log.debug("Executing :: getUserById :: START");
         log.info("Fetching user for {}", userId);
 
-        HttpStatus httpStatus = HttpStatus.OK;
         UserResponse userResponse = new UserResponse();
-        int usrId = 0;
-        try{
-            String invalidateRequestMgs = validateRequest(userId);
-            if(StringUtils.isEmpty(invalidateRequestMgs)){
-                usrId = Integer.parseInt(userId);
-                userResponse = userService.getUserById(usrId);
-                log.info("userResponse  = {}", userResponse.toString());
-            }else {
-                userResponse.setStatus(new StatusResponse(Integer.valueOf(AppConstants.ERROR_CODE_INVALID_REQUEST), AppConstants.ERROR_MSG_INVALID_REQUEST));
-                userResponse.setError(new ErrorResponse(Integer.valueOf(invalidateRequestMgs.split("~")[0]), invalidateRequestMgs.split("~")[1]));
-            }
-        }catch (Exception e){
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-            userResponse.setStatus(null);
-            userResponse.setError(new ErrorResponse(Integer.valueOf(AppConstants.ERROR_CODE_FAILURE), AppConstants.ERROR_MSG_FAILURE));
+        String invalidateRequestMgs = validateRequest(userId);
+        if(StringUtils.isEmpty(invalidateRequestMgs)){
+            int usrId = Integer.parseInt(userId);
+            userResponse = userService.getUserById(usrId);
+            log.info("userResponse  = {}", userResponse.toString());
+        }else {
+            userResponse.setStatus(new StatusResponse(Integer.valueOf(AppConstants.ERROR_CODE_INVALID_REQUEST), AppConstants.ERROR_MSG_INVALID_REQUEST));
+            userResponse.setError(new ErrorResponse(Integer.valueOf(invalidateRequestMgs.split("~")[0]), invalidateRequestMgs.split("~")[1]));
         }
-        return new ResponseEntity<>(userResponse, httpStatus);
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @PostMapping("")
     public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest user){
-        HttpStatus httpStatus = HttpStatus.OK;
         UserResponse userResponse = new UserResponse();
-        try {
-            System.out.println();
-        }catch (Exception e){
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-            userResponse.setStatus(null);
-            userResponse.setError(new ErrorResponse(Integer.valueOf(AppConstants.ERROR_CODE_FAILURE), AppConstants.ERROR_MSG_FAILURE));
-        }
-        return new ResponseEntity<>(userResponse, httpStatus);
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     private String validateRequest(String userId) {

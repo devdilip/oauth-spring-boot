@@ -1,6 +1,7 @@
 package com.authentication.oauth.mapper;
 
 
+import com.authentication.oauth.common.constants.AppConstants;
 import com.authentication.oauth.model.AppResponse;
 import com.authentication.oauth.model.ErrorResponse;
 import com.authentication.oauth.model.StatusResponse;
@@ -40,6 +41,7 @@ public class ResponseFormatter {
                         Integer.parseInt(messageSource.getMessage("response.code.internalServerError", null, Locale.getDefault())),
                         messageSource.getMessage("response.message.internalServerError", null, Locale.getDefault())
                 ));
+                appResponse.setError(new ErrorResponse(Integer.valueOf(AppConstants.ERROR_CODE_FAILURE), AppConstants.ERROR_MSG_FAILURE));
                 break;
 
             case ERROR_DATABASE:
@@ -54,6 +56,12 @@ public class ResponseFormatter {
                 String invalidRequestMessage = messageSource.getMessage("response.message.invalidRequest", null, Locale.getDefault());
                 appResponse.setStatus(new StatusResponse(invalidRequestCode, invalidRequestMessage));
                 setErrorInResponse(appResponse, errors, invalidRequestCode);
+                break;
+
+            case ERROR_404_NOT_FOUND:
+                Integer noRecordCode = Integer.parseInt(messageSource.getMessage("response.code.noRecord", null, Locale.getDefault()));
+                String noRecordMessage = messageSource.getMessage("response.message.noRecord", null, Locale.getDefault());
+                appResponse.setStatus(new StatusResponse(noRecordCode, noRecordMessage));
                 break;
 
             case ERROR_405_METHOD_NOT_ALLOWED:
