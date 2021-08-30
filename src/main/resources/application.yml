@@ -15,6 +15,17 @@ spring:
     hibernate:
       ddl-auto: update
 
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+#      base-path: "/actuator"
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+
 file:
   location:
     secrets: src/main/resources/secret.json
