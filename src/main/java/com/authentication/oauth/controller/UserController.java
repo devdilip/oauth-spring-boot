@@ -5,7 +5,7 @@ import com.authentication.oauth.model.ErrorResponse;
 import com.authentication.oauth.model.StatusResponse;
 import com.authentication.oauth.model.UserRequest;
 import com.authentication.oauth.model.UserResponse;
-import com.authentication.oauth.service.UserService;
+import com.authentication.oauth.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -25,7 +25,7 @@ import static com.authentication.oauth.common.constants.RouteConstant.USER_BASE_
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable("userId") String userId){

@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class UserService {
+public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
 
-
+    @Override
     public UserResponse getUserById(Integer userId){
         log.info("Inside the getUserById :: UserService");
         UserResponse userResponse = new UserResponse();
