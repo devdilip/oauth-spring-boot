@@ -56,14 +56,17 @@ public class LoggingAspect {
                 joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName(),
                 request);
         try {
-            ResponseEntity responseEntity = ((ResponseEntity) joinPoint.proceed());
-            if(responseEntity.getBody() instanceof UserResponse){
-                UserResponse response = (UserResponse) responseEntity.getBody();
-                log.info("Controller Response: {}. {} () with result : Status Code = {}, Status message = {}, Response = {}",
-                        joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName(),
-                        response.getStatus().getCode(), response.getStatus().getMessage(), response);
+            Object joinPointProceedResult = joinPoint.proceed();
+            if(joinPointProceedResult instanceof ResponseEntity){
+                ResponseEntity responseEntity = (ResponseEntity) joinPointProceedResult;
+                if(responseEntity.getBody() instanceof UserResponse){
+                    UserResponse response = (UserResponse) responseEntity.getBody();
+                    log.info("Controller Response: {}. {} () with result : Status Code = {}, Status message = {}, Response = {}",
+                            joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName(),
+                            response.getStatus().getCode(), response.getStatus().getMessage(), response);
+                }
             }
-            return responseEntity;
+            return joinPointProceedResult;
         }catch (IllegalArgumentException exception){
             log.error("Controller: Illegal arguments: {} in {}. {} ()",
                     Arrays.toString(joinPoint.getArgs()), joinPoint.getSignature().getDeclaringTypeName(),
