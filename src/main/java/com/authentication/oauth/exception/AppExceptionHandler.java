@@ -15,6 +15,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
@@ -61,6 +62,22 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.error("handleHttpMessageNotReadable: {}", ex.getMessage());
         AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_400_INVALID_ARGUMENT, List.of(Objects.requireNonNull(ex.getMessage())));
+        return new ResponseEntity<>(appResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * MethodArgumentTypeMismatchException
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    protected ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        log.error("MethodArgumentTypeMismatchException: {}", ex.getMessage());
+        String argumentName = ex.getName();
+        String requiredType = Objects.requireNonNull(ex.getRequiredType()).getSimpleName();
+        Object currentValue = ex.getValue();
+        String exceptionMessage = String.format("'%s' should be a valid '%s' not '%s'", argumentName, requiredType, currentValue);
+        AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_400_INVALID_ARGUMENT, List.of(Objects.requireNonNull(exceptionMessage)));
         return new ResponseEntity<>(appResponse, HttpStatus.BAD_REQUEST);
     }
 
