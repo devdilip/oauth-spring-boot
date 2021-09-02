@@ -1,7 +1,6 @@
 package com.authentication.oauth.mapper;
 
 
-import com.authentication.oauth.common.constants.AppConstants;
 import com.authentication.oauth.model.AppResponse;
 import com.authentication.oauth.model.ErrorResponse;
 import com.authentication.oauth.model.StatusResponse;
@@ -41,7 +40,7 @@ public class ResponseFormatter {
                         Integer.parseInt(messageSource.getMessage("response.code.internalServerError", null, Locale.getDefault())),
                         messageSource.getMessage("response.message.internalServerError", null, Locale.getDefault())
                 ));
-                setErrorInResponse(appResponse, errors, Integer.valueOf(AppConstants.ERROR_CODE_FAILURE));
+                setErrorInResponse(appResponse, errors, Integer.parseInt(messageSource.getMessage("response.code.failure", null, Locale.getDefault())));
                 break;
 
             case ERROR_DATABASE:
@@ -49,7 +48,7 @@ public class ResponseFormatter {
                         Integer.parseInt(messageSource.getMessage("response.code.failure", null, Locale.getDefault())),
                         messageSource.getMessage("response.message.failure", null, Locale.getDefault())
                 ));
-                setErrorInResponse(appResponse, errors, Integer.valueOf(AppConstants.ERROR_DB));
+                setErrorInResponse(appResponse, errors, Integer.parseInt(messageSource.getMessage("response.code.dbError", null, Locale.getDefault())));
                 break;
 
             case ERROR_400_INVALID_ARGUMENT:

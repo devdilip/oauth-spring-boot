@@ -2,32 +2,9 @@ package com.authentication.oauth.common.constants;
 
 public class AppConstants {
 
-    public static final String SUCCESS_CODE = "100";
-    public static final String SUCCESS_MSG = "Success with result!";
-
-    public static final String SUCCESS_CODE_CREATE = "101";
-    public static final String SUCCESS_MSG_CREATE = "Record created!";
-
-    public static final String ERROR_CODE_INVALID_REQUEST = "102";
-    public static final String ERROR_MSG_INVALID_REQUEST = "Invalid request!";
-
-    public static final String ERROR_CODE_FAILURE = "103";
-    public static final String ERROR_MSG_FAILURE = "Failure!";
-
-    public static final String INVALID_USER_ID = "104";
-    public static final String INVALID_USER_ID_MSG = "Invalid user id!";
-
-    public static final String ERROR_CREATE_USER_ID = "105";
-    public static final String ERROR_CREATE_USER_ID_MSG = "Error while creating user!";
-
-    public static final String ERROR_DB = "106";
-
     public static final String ERROR_MSG_UNAUTHORIZED = "You are not authorized!";
 
-    public static final String APP_PATH_IDENTIFIER = "/app/**";
     public static final String ACTUATOR_PATH_IDENTIFIER = "/actuator/**";
-    public static final String APP_ACTUATOR_PATH_IDENTIFIER = "/app/actuator/**";
-    public static final String ALL_PATH_IDENTIFIER = "/**";
     public static final String SECURITY_EXCLUDED_PATHS = "\"/dist/**\", \"/static/js/**\", \"/app/**\" ";
 
     public static final String AUTHORITIES_ROLE_USER = "ROLE_USER";

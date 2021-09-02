@@ -1,13 +1,17 @@
 package com.authentication.oauth.service;
 
-import com.authentication.oauth.common.constants.AppConstants;
 import com.authentication.oauth.entity.User;
-import com.authentication.oauth.model.*;
+import com.authentication.oauth.model.StatusResponse;
+import com.authentication.oauth.model.UserDetailResponse;
+import com.authentication.oauth.model.UserRequest;
+import com.authentication.oauth.model.UserResponse;
 import com.authentication.oauth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -15,6 +19,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     public UserResponse getUserById(Integer userId){
@@ -27,7 +34,10 @@ public class UserService implements IUserService {
             userDetailResponse.setEmail(user.getEmail());
             userDetailResponse.setMobile(user.getMobile());
             userResponse.setUserDetailResponse(userDetailResponse);
-            userResponse.setStatus(new StatusResponse(Integer.parseInt(AppConstants.SUCCESS_CODE), AppConstants.SUCCESS_MSG));
+            userResponse.setStatus(new StatusResponse(
+                    Integer.parseInt(messageSource.getMessage("response.code.success", null, Locale.getDefault())),
+                    messageSource.getMessage("response.message.success", null, Locale.getDefault())
+            ));
         }else {
             throw new EntityNotFoundException();
         }
@@ -49,9 +59,15 @@ public class UserService implements IUserService {
             userDetailResponse.setEmail(user.getEmail());
             userDetailResponse.setMobile(user.getMobile());
             userResponse.setUserDetailResponse(userDetailResponse);
-            userResponse.setStatus(new StatusResponse(Integer.parseInt(AppConstants.SUCCESS_CODE_CREATE), AppConstants.SUCCESS_MSG_CREATE));
+            userResponse.setStatus(new StatusResponse(
+                    Integer.parseInt(messageSource.getMessage("response.code.recordCreated", null, Locale.getDefault())),
+                    messageSource.getMessage("response.message.recordCreated", null, Locale.getDefault())
+            ));
         }else {
-            userResponse.setStatus(new StatusResponse(Integer.parseInt(AppConstants.ERROR_CREATE_USER_ID), AppConstants.ERROR_CREATE_USER_ID_MSG));
+            userResponse.setStatus(new StatusResponse(
+                    Integer.parseInt(messageSource.getMessage("response.code.createUserError", null, Locale.getDefault())),
+                    messageSource.getMessage("response.message.createUserError", null, Locale.getDefault())
+            ));
         }
         return userResponse;
     }
