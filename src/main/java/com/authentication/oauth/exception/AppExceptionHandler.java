@@ -32,8 +32,8 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<AppResponse> handleUnauthorizedException(AccessDeniedException exception){
-        log.error("Unauthorized: {}", exception.getMessage());
-        AppResponse appResponse = responseFormatter.getFailureResponse(HttpStatus.UNAUTHORIZED.toString(), null);
+        log.error("handleUnauthorizedException :: Unauthorized: {}", exception.getMessage());
+        AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_401_UNAUTHORIZED, null);
         return new ResponseEntity<>(appResponse, HttpStatus.UNAUTHORIZED);
     }
 
@@ -72,7 +72,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
-        log.error("MethodArgumentTypeMismatchException: {}", ex.getMessage());
+        log.error("handleMethodArgumentTypeMismatchException :: MethodArgumentTypeMismatchException: {}", ex.getMessage());
         String argumentName = ex.getName();
         String requiredType = Objects.requireNonNull(ex.getRequiredType()).getSimpleName();
         Object currentValue = ex.getValue();
@@ -88,7 +88,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AppResponse> handleEntityNotFoundException(EntityNotFoundException exception) {
-        log.error("EntityNotFoundException: {}", exception.getMessage());
+        log.error("handleEntityNotFoundException :: EntityNotFoundException: {}", exception.getMessage());
         AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_404_NOT_FOUND, null);
         return new ResponseEntity<>(appResponse, HttpStatus.OK);
     }
@@ -100,7 +100,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> handleException(Exception exception) {
-        log.error("Exception: {}", exception.getMessage());
+        log.error("handleException :: Exception: {}", exception.getMessage());
         AppResponse appResponse = responseFormatter.getFailureResponse(AppConstants.ERROR_500_INTERNAL_SERVER_ERROR, List.of(exception.getMessage()));
         return new ResponseEntity<>(appResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
