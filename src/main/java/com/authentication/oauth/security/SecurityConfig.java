@@ -38,10 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(AppConstants.ACTUATOR_PATH_IDENTIFIER).permitAll()
+                .antMatchers(AppConstants.ACTUATOR_PATH_IDENTIFIER, AppConstants.SECURITY_EXCLUDED_PATHS).permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
-//                .authenticationEntryPoint(authenticationEntry)
+                .authenticationEntryPoint(authenticationEntry)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         ;
     }

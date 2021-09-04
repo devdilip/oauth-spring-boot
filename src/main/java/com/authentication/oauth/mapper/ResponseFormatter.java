@@ -5,6 +5,7 @@ import com.authentication.oauth.model.AppResponse;
 import com.authentication.oauth.model.ErrorResponse;
 import com.authentication.oauth.model.StatusResponse;
 import com.authentication.oauth.model.UserResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 import static com.authentication.oauth.common.constants.AppConstants.*;
 
 @Component
+@Slf4j
 public class ResponseFormatter {
 
     @Autowired
@@ -48,6 +50,7 @@ public class ResponseFormatter {
     public <T> AppResponse getFailureResponse(String errorCode, List<T> errors){
 
         AppResponse appResponse = new AppResponse();
+        log.error("getFailureResponse :: ErrorCode: {}", errorCode);
 
         switch (errorCode){
 
