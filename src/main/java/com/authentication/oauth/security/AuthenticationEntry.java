@@ -1,6 +1,5 @@
 package com.authentication.oauth.security;
 
-import com.authentication.oauth.common.constants.AppConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,6 +28,6 @@ public class AuthenticationEntry implements AuthenticationEntryPoint {
         log.error("commence :: AuthenticationEntry : {}", e.getMessage());
         httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         handlerExceptionResolver.resolveException(httpServletRequest, httpServletResponse, null,
-                new AccessDeniedException((AppConstants.ERROR_MSG_UNAUTHORIZED)));
+                new AccessDeniedException(HttpStatus.UNAUTHORIZED.toString()));
     }
 }
