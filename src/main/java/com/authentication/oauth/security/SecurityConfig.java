@@ -43,7 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().httpBasic()
                 .authenticationEntryPoint(authenticationEntry)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        ;
     }
 
     @Override
