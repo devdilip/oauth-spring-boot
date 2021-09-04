@@ -17,4 +17,8 @@ public class AppConstants {
     public static final String ERROR_405_METHOD_NOT_ALLOWED = "405 METHOD_NOT_ALLOWED";
     public static final String ERROR_DATABASE = "Database Error";
 
+    public static final String SUCCESS_CREATED = "SUCCESS_CREATED";
+    public static final String SUCCESS = "SUCCESS";
+
+
 }

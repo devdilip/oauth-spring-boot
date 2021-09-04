@@ -4,6 +4,7 @@ package com.authentication.oauth.mapper;
 import com.authentication.oauth.model.AppResponse;
 import com.authentication.oauth.model.ErrorResponse;
 import com.authentication.oauth.model.StatusResponse;
+import com.authentication.oauth.model.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,28 @@ public class ResponseFormatter {
 
     @Autowired
     private MessageSource messageSource;
+
+    public UserResponse getSuccessResponse(UserResponse userResponse, String successCode){
+
+        switch (successCode){
+            case SUCCESS:
+                userResponse.setStatus(new StatusResponse(
+                        Integer.parseInt(messageSource.getMessage("response.code.success", null, Locale.getDefault())),
+                        messageSource.getMessage("response.message.success", null, Locale.getDefault())
+                ));
+                break;
+            case SUCCESS_CREATED:
+                userResponse.setStatus(new StatusResponse(
+                        Integer.parseInt(messageSource.getMessage("response.code.recordCreated", null, Locale.getDefault())),
+                        messageSource.getMessage("response.message.recordCreated", null, Locale.getDefault())
+                ));
+                break;
+
+            default:
+                break;
+        }
+        return userResponse;
+    }
 
     public <T> AppResponse getFailureResponse(String errorCode, List<T> errors){
 
