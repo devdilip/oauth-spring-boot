@@ -26,11 +26,29 @@ public class UserService implements IUserService {
         return userRepository.findById(userId)
                 .map(user -> {
                     UserResponse userResponse = new UserResponse();
-                    UserDetailResponse userDetailResponse = new UserDetailResponse();
-                    userDetailResponse.setName(user.getFirstName() + " " + user.getLastName());
-                    userDetailResponse.setEmail(user.getEmail());
-                    userDetailResponse.setMobile(user.getMobile());
-                    userResponse.setUserDetailResponse(userDetailResponse);
+                    userResponse.setUserDetailResponse(new UserDetailResponse(user));
+                    return responseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
+                })
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public UserResponse getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> {
+                    UserResponse userResponse = new UserResponse();
+                    userResponse.setUserDetailResponse(new UserDetailResponse(user));
+                    return responseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
+                })
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public UserResponse getUserByMobile(String mobile) {
+        return userRepository.findByMobile(mobile)
+                .map(user -> {
+                    UserResponse userResponse = new UserResponse();
+                    userResponse.setUserDetailResponse(new UserDetailResponse(user));
                     return responseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
                 })
                 .orElseThrow(EntityNotFoundException::new);
@@ -45,11 +63,7 @@ public class UserService implements IUserService {
         user.setLastName(userRequest.getLastName());
         user.setMobile(userRequest.getMobile());
         user = userRepository.save(user);
-        UserDetailResponse userDetailResponse = new UserDetailResponse();
-        userDetailResponse.setName(user.getFirstName() + " " + user.getLastName());
-        userDetailResponse.setEmail(user.getEmail());
-        userDetailResponse.setMobile(user.getMobile());
-        userResponse.setUserDetailResponse(userDetailResponse);
+        userResponse.setUserDetailResponse(new UserDetailResponse(user));
         return responseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS_CREATED);
     }
 }

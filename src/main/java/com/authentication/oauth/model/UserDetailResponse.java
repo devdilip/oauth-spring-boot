@@ -1,5 +1,6 @@
 package com.authentication.oauth.model;
 
+import com.authentication.oauth.entity.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,4 +15,10 @@ public class UserDetailResponse {
     private String name;
     private String email;
     private String mobile;
+
+    public UserDetailResponse(User user){
+        this.setName(user.getFirstName() + " " + user.getLastName());
+        this.setEmail(user.getEmail());
+        this.setMobile(user.getMobile());
+    }
 }

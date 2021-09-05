@@ -25,6 +25,16 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable("email")  String email){
+        return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
+    }
+
+    @GetMapping("/mobile/{mobile}")
+    public ResponseEntity<UserResponse> getUserByMobile(@PathVariable("mobile")  String mobile){
+        return new ResponseEntity<>(userService.getUserByMobile(mobile), HttpStatus.OK);
+    }
+
     @PostMapping("")
     public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest){
         UserResponse userResponse = userService.saveUser(userRequest);

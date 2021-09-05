@@ -7,6 +7,10 @@ public interface IUserService {
 
     UserResponse getUserById(Integer userId);
 
+    UserResponse getUserByEmail(String email);
+
+    UserResponse getUserByMobile(String mobile);
+
     UserResponse saveUser(UserRequest userRequest);
 
 }
