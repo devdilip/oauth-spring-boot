@@ -1,7 +1,7 @@
 server:
   port: 8000
-#  servlet:
-#    context-path: /app
+  servlet:
+    context-path: /app
 
 spring:
   application:
@@ -17,14 +17,18 @@ spring:
 
 management:
   endpoints:
-    enabled-by-default: false
+    enabled-by-default: true
     web:
-#      base-path: "/actuator"
+      base-path: /actuator
       exposure:
         include: "*"
-  endpoint:
-    info:
-      enabled: true
+#  endpoint:
+#    env:
+#      enabled: true
+#    health:
+#      enabled: true
+#    info:
+#      enabled: true
 
 file:
   location:
