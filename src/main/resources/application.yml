@@ -34,3 +34,7 @@ app:
   messages:
     basename: "messages"
     encoding: "UTF-8"
+
+springdoc:
+  api-docs:
+    path: /oauth-openapi

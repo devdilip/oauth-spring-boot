@@ -3,6 +3,7 @@ package com.authentication.oauth.controller;
 import com.authentication.oauth.model.UserRequest;
 import com.authentication.oauth.model.UserResponse;
 import com.authentication.oauth.service.IUserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import static com.authentication.oauth.common.constants.RouteConstant.USER_BASE_
 
 @RestController
 @RequestMapping(APP_VERSION + USER_BASE_ROUTE)
+@SecurityRequirement(name = USER_BASE_ROUTE)
 public class UserController {
 
     @Autowired

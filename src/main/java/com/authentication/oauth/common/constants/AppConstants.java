@@ -4,6 +4,8 @@ public class AppConstants {
 
     public static final String ACTUATOR_PATH_IDENTIFIER = "/actuator/**";
     public static final String SECURITY_EXCLUDED_PATHS = "\"/dist/**\", \"/static/js/**\", \"/app/**\" ";
+    public static final String SWAGGER_PATHS = "/swagger-ui/**";
+    public static final String OPEN_API_PATHS = "/oauth-openapi/**";
 
     public static final String AUTHORITIES_ROLE_USER = "ROLE_USER";
 
