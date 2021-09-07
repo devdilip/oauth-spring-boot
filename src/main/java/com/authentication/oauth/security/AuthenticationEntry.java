@@ -24,14 +24,11 @@ public class AuthenticationEntry extends BasicAuthenticationEntryPoint {
 
 
     @Override
-    public void commence(
-            HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx)
-            throws IOException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx) throws IOException {
         log.error("commence :: AuthenticationEntry : {}", authEx.getMessage());
-        response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
+        response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        handlerExceptionResolver.resolveException(request, response, null,
-                new AccessDeniedException(HttpStatus.UNAUTHORIZED.toString()));
+        handlerExceptionResolver.resolveException(request, response, null, new AccessDeniedException(HttpStatus.UNAUTHORIZED.toString()));
     }
 
     @Override
