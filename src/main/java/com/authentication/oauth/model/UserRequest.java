@@ -1,35 +1,38 @@
 package com.authentication.oauth.model;
 
+import com.authentication.oauth.model.validation.group.EmailGroup;
+import com.authentication.oauth.model.validation.group.MobileGroup;
+import com.authentication.oauth.model.validation.group.UserRequestGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class UserRequest {
 
-    @NotNull (message = "FirstName should not be null")
-    @NotBlank (message = "FirstName should not be empty")
-    @Size(min = 5, max = 20,  message = "FirstName size must be between 5 and 30")
+    @NotBlank ( groups = { UserRequestGroup.class}, message = "{response.message.requiredFields}")
+    @NotEmpty ( groups = { UserRequestGroup.class}, message = "{response.message.requiredFields}")
+    @Pattern(groups = {UserRequestGroup.class}, regexp = "^([a-z]+[,.]?[ ]?|[a-z]+['-]?)+$", message = "{response.message.invalidProperties}")
     private String firstName;
 
-    @NotNull (message = "LastName should not be null")
-    @NotBlank (message = "LastName should not be empty")
-    @Size(min = 5, max = 20,  message = "LastName size must be between 5 and 30")
+    @NotBlank ( groups = { UserRequestGroup.class}, message = "{response.message.requiredFields}")
+    @NotEmpty ( groups = { UserRequestGroup.class}, message = "{response.message.requiredFields}")
+    @Pattern(groups = {UserRequestGroup.class}, regexp = "^([a-z]+[,.]?[ ]?|[a-z]+['-]?)+$", message = "{response.message.invalidProperties}")
     private String lastName;
 
-    @NotNull (message = "Email should not be null")
-    @NotBlank (message = "Email should not be empty")
-    @Size(min = 5, max = 30, message = "Email size must be between 5 and 30")
+    @NotBlank ( groups = {EmailGroup.class, UserRequestGroup.class}, message = "{response.message.requiredFields}")
+    @NotEmpty (groups = {EmailGroup.class, UserRequestGroup.class},message = "{response.message.requiredFields}")
+    @Pattern(groups = {EmailGroup.class, UserRequestGroup.class}, regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", message = "{response.message.invalidProperties}")
     private String email;
 
-    @Size(min = 8, max = 13, message = "Mobile size must be between 8 and 13")
-    @NotNull (message = "Mobile should not be null")
-    @NotBlank (message = "Mobile should not be empty")
+    @NotBlank (groups = {MobileGroup.class, UserRequestGroup.class},message = "{response.message.requiredFields}")
+    @NotEmpty (groups = {MobileGroup.class, UserRequestGroup.class},message = "{response.message.requiredFields}")
+    @Pattern(groups = {MobileGroup.class, UserRequestGroup.class}, regexp = "^[0-9]+", message = "{response.message.invalidProperties}")
     private String mobile;
 }

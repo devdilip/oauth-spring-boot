@@ -5,15 +5,16 @@ import com.authentication.oauth.model.AppResponse;
 import com.authentication.oauth.model.ErrorResponse;
 import com.authentication.oauth.model.StatusResponse;
 import com.authentication.oauth.model.UserResponse;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.authentication.oauth.common.constants.AppConstants.*;
@@ -77,11 +78,11 @@ public class ResponseFormatter {
                 setErrorInResponse(appResponse, errors, Integer.parseInt(messageSource.getMessage("response.code.dbError", null, Locale.getDefault())));
                 break;
 
-            case ERROR_400_INVALID_ARGUMENT:
+            case ERROR_400_BAD_REQUEST:
                 Integer invalidRequestCode = Integer.parseInt(messageSource.getMessage("response.code.invalidRequest", null, Locale.getDefault()));
                 String invalidRequestMessage = messageSource.getMessage("response.message.invalidRequest", null, Locale.getDefault());
                 appResponse.setStatus(new StatusResponse(invalidRequestCode, invalidRequestMessage));
-                setErrorInResponse(appResponse, errors, invalidRequestCode);
+                setErrorsInResponse(appResponse, errors, invalidRequestCode);
                 break;
 
             case ERROR_404_NOT_FOUND:
@@ -101,6 +102,51 @@ public class ResponseFormatter {
                 break;
         }
         return appResponse;
+    }
+    static <T> void setErrorsInResponse(AppResponse appResponse, List<T> errors, Integer errorCode){
+        if(errors != null){
+            if(errors.get(0) instanceof ObjectError){
+                List<ErrorResponse> invalidErrors = new ArrayList<>();
+                Set<String> missingInput = new LinkedHashSet<>();
+                Set<String> invalidProperties = new LinkedHashSet<>();
+
+                errors.forEach(error -> {
+                    String[] errorCodeAndMessage = ((DefaultMessageSourceResolvable) error).getDefaultMessage().split("##");
+                    if(errorCodeAndMessage.length == 1){
+                        if(MISSING_REQUIRED_PROPERTIES.equals(errorCodeAndMessage[0]))
+                            missingInput.add(((FieldError) error).getField());
+                        if(INVALID_PROPERTIES.equals(errorCodeAndMessage[0]))
+                            invalidProperties.add(((FieldError) error).getField());
+                    }else {
+                        invalidErrors.add(new ErrorResponse(
+                                errorCodeAndMessage.length == 2 ? Integer.parseInt((errorCodeAndMessage[1])) : null,
+                                errorCodeAndMessage[0]));
+                    }
+                });
+                invalidProperties.removeAll(missingInput);
+                List<String> errorFormat = new ArrayList<>();
+
+                if(!missingInput.isEmpty())
+                    errorFormat.add(MISSING_REQUIRED_PROPERTIES + missingInput);
+                if(!invalidProperties.isEmpty())
+                    errorFormat.add(INVALID_PROPERTIES + invalidProperties);
+                if (!errorFormat.isEmpty())
+                    appResponse.setErrors(errorFormat);
+
+            }else if (errors.get(0) instanceof ErrorResponse){
+                appResponse.setErrors(errors);
+            }else if (errors.get(0) instanceof JsonMappingException.Reference){
+                List<String> invalidProperties = new ArrayList<>();
+                errors.forEach(error -> {
+                    JsonMappingException.Reference reference = ((JsonMappingException.Reference) error);
+                    invalidProperties.add(reference.getFieldName());
+                });
+                if (!invalidProperties.isEmpty())
+                    appResponse.setErrors(Arrays.asList(INVALID_PROPERTIES + invalidProperties));
+            }else if (errors.get(0) instanceof String){
+                appResponse.setErrors(errors);
+            }
+        }
     }
 
     static <T> void setErrorInResponse(AppResponse appResponse, List<T> errors, Integer errorCode){
