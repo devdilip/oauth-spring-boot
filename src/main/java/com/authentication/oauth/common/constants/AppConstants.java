@@ -22,4 +22,9 @@ public class AppConstants {
     public static final String MISSING_REQUIRED_PROPERTIES = "Missing required input properties";
     public static final String INVALID_PROPERTIES = "Invalid properties";
 
+    // Regex
+    public static final String NAME_REGEX = "^([a-z]+[,.]?[ ]?|[a-z]+['-]?)+$";
+    public static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+    public static final String MOBILE_REGEX = "^[0-9]+";
+
 }
