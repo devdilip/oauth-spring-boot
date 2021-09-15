@@ -7,6 +7,7 @@ import com.authentication.oauth.model.UserDetailResponse;
 import com.authentication.oauth.model.UserRequest;
 import com.authentication.oauth.model.UserResponse;
 import com.authentication.oauth.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +20,19 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
 
     @Autowired
-    private ResponseFormatter responseFormatter;
+    private ResponseFormatter userResponseFormatter;
+
+    @Autowired
+    private ObjectMapper userMapper;
 
     @Override
     public UserResponse getUserById(Integer userId){
         return userRepository.findById(userId)
                 .map(user -> {
                     UserResponse userResponse = new UserResponse();
-                    userResponse.setUserDetailResponse(new UserDetailResponse(user));
-                    return responseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
+                    UserDetailResponse userDetailResponse = userMapper.convertValue(user, UserDetailResponse.class);
+                    userResponse.setUserDetailResponse(userDetailResponse);
+                    return userResponseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
                 })
                 .orElseThrow(EntityNotFoundException::new);
     }
@@ -37,8 +42,9 @@ public class UserService implements IUserService {
         return userRepository.findByEmail(email)
                 .map(user -> {
                     UserResponse userResponse = new UserResponse();
-                    userResponse.setUserDetailResponse(new UserDetailResponse(user));
-                    return responseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
+                    UserDetailResponse userDetailResponse = userMapper.convertValue(user, UserDetailResponse.class);
+                    userResponse.setUserDetailResponse(userDetailResponse);
+                    return userResponseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
                 })
                 .orElseThrow(EntityNotFoundException::new);
     }
@@ -48,8 +54,9 @@ public class UserService implements IUserService {
         return userRepository.findByMobile(mobile)
                 .map(user -> {
                     UserResponse userResponse = new UserResponse();
-                    userResponse.setUserDetailResponse(new UserDetailResponse(user));
-                    return responseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
+                    UserDetailResponse userDetailResponse = userMapper.convertValue(user, UserDetailResponse.class);
+                    userResponse.setUserDetailResponse(userDetailResponse);
+                    return userResponseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS);
                 })
                 .orElseThrow(EntityNotFoundException::new);
     }
@@ -63,7 +70,8 @@ public class UserService implements IUserService {
         user.setLastName(userRequest.getLastName());
         user.setMobile(userRequest.getMobile());
         user = userRepository.save(user);
-        userResponse.setUserDetailResponse(new UserDetailResponse(user));
-        return responseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS_CREATED);
+        UserDetailResponse userDetailResponse = userMapper.convertValue(user, UserDetailResponse.class);
+        userResponse.setUserDetailResponse(userDetailResponse);
+        return userResponseFormatter.getSuccessResponse(userResponse, AppConstants.SUCCESS_CREATED);
     }
 }

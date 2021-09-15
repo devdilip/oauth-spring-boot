@@ -1,7 +1,9 @@
 package com.authentication.oauth.model;
 
-import com.authentication.oauth.entity.User;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,14 +13,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDetailResponse {
+
+    @JsonIgnore
+    @JsonProperty(value = "id")
     private Integer id;
-    private String name;
+
+    @JsonProperty(value = "firstName")
+    @JsonAlias(value = "name")
+    private String firstName;
+
+    @JsonProperty(value = "lastName")
+    private String lastName;
+
+    @JsonProperty(value = "email")
     private String email;
+
+    @JsonProperty(value = "mobile")
     private String mobile;
 
-    public UserDetailResponse(User user){
-        this.setName(user.getFirstName() + " " + user.getLastName());
-        this.setEmail(user.getEmail());
-        this.setMobile(user.getMobile());
-    }
 }

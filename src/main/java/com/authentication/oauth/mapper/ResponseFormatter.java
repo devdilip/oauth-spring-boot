@@ -82,7 +82,7 @@ public class ResponseFormatter {
                 Integer invalidRequestCode = Integer.parseInt(messageSource.getMessage("response.code.invalidRequest", null, Locale.getDefault()));
                 String invalidRequestMessage = messageSource.getMessage("response.message.invalidRequest", null, Locale.getDefault());
                 appResponse.setStatus(new StatusResponse(invalidRequestCode, invalidRequestMessage));
-                setErrorsInResponse(appResponse, errors, invalidRequestCode);
+                setErrorsInResponse(appResponse, errors);
                 break;
 
             case ERROR_404_NOT_FOUND:
@@ -103,7 +103,7 @@ public class ResponseFormatter {
         }
         return appResponse;
     }
-    static <T> void setErrorsInResponse(AppResponse appResponse, List<T> errors, Integer errorCode){
+    static <T> void setErrorsInResponse(AppResponse appResponse, List<T> errors){
         if(errors != null){
             if(errors.get(0) instanceof ObjectError){
                 List<ErrorResponse> invalidErrors = new ArrayList<>();
